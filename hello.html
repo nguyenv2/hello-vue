@@ -1,3 +1,65 @@
 <!DOCTYPE html>
 
-<script type="text/javascript" scr="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.0/vue.js"></script>
+<script src="https://unpkg.com/vue"></script>
+
+<div id="app">
+   <h1>{{msg}}</h1>
+   <a v-bind:href="url + '?myParam=1'">Home</a>
+
+   <p>
+      <form>
+         Name: <input type="text" v-bind:value="name">
+         <label for="email">Email<input type="email" v-model.lazy="email" id="email">
+         <fieldset>
+            <legend>Interest</legend>
+
+
+            <div v-for="interest in interests">
+               <input type="checkbox" v-model="selectedInterests" v-bind:value="interest.id">{{interest.name}}
+            </div>
+
+
+
+         </fieldset>
+
+         <!-- better performance -->
+         <p v-show="selectedInterests.length > 0">You selected: {{selectedInterests.join(', ')}}</p>
+
+         <!-- complete removes from DOM -->
+         <p v-if="selectedInterests.length === 3">You must be very active.</p>
+         <p v-else-if="selectedInterests.length > 0">You selected: {{selectedInterests.join(', ')}}</p>
+         <p v-else>Please select at least one interest.</p>
+
+      </form>
+   </p>
+
+   <p>
+      you entered {{email}}
+   </p>
+</div>
+
+<script>
+   var vm = new Vue({
+      el: '#app',
+      data: {
+         msg: 'Hello from Vue!',
+         url: 'https://www.apple.com',
+         name: 'Billy',
+         email: 'mike@example.com',
+         interests: [{
+            id:1,
+            name:'Running'
+         },{
+            id:2,
+            name:'Cycling'
+         },{
+            id:3,
+            name:'Swimming'
+         },{
+            id:4,
+            name:'Juggling'
+         }],
+         selectedInterests: []
+      }
+   })
+</script>
